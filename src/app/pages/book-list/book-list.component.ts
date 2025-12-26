@@ -7,12 +7,9 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './book-list.component.html',
-  styleUrl: './book-list.component.scss'
+  styleUrls: ['./book-list.component.scss', '../../../core/styles/page.scss'],
 })
 export class BookListComponent implements OnInit {
-
-  ngOnInit(): void {
-  }
-
-
+ 
+  ngOnInit(): void {}
 }
