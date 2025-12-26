@@ -1,10 +1,10 @@
-.book-list {
+.page-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.book-list__header {
+.page-list__header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -16,7 +16,7 @@
   }
 }
 
-.book-list__eyebrow {
+.page-list__eyebrow {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #948c83;
@@ -26,7 +26,7 @@
   line-height: 1.6rem;
 }
 
-.book-list__lede {
+.page-list__lede {
   margin: 0.25rem 0 0;
   color: #aba093;
 }
