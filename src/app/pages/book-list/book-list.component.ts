@@ -1,11 +1,18 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { Book } from '../../../core/model/book.model';
 import { BooksService } from '../../../core/services/books.service';
+import { loadBooks } from '../../store/books/books.actions';
+import {
+  selectBooks,
+  selectBooksError,
+  selectBooksLoading,
+} from '../../store/books/books.selectors';
 
 @Component({
   selector: 'app-book-list',
@@ -14,13 +21,13 @@ import { BooksService } from '../../../core/services/books.service';
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.scss'],
 })
-export class BookListComponent {
+export class BookListComponent implements OnInit {
   private readonly booksService = inject(BooksService);
+  private readonly store = inject(Store);
 
-  readonly books = rxResource<Book[], void>({
-    defaultValue: [],
-    loader: () => this.booksService.getBooks(),
-  });
+  readonly books = this.store.selectSignal(selectBooks);
+  readonly booksLoading = this.store.selectSignal(selectBooksLoading);
+  readonly booksError = this.store.selectSignal(selectBooksError);
 
   private readonly selectedBookId = signal<string | null>(null);
 
@@ -31,8 +38,8 @@ export class BookListComponent {
       request ? this.booksService.getBook(request) : of(null),
   });
 
-  selectBook(id: string) {
-    this.selectedBookId.set(id);
+  ngOnInit(): void {
+    this.store.dispatch(loadBooks());
   }
 
   toggleFavorite(book: Book) {
