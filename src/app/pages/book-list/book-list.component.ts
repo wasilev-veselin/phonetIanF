@@ -1,7 +1,8 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
 
 import { Book } from '../../../core/model/book.model';
 import { BooksService } from '../../../core/services/books.service';
@@ -16,14 +17,25 @@ import { BooksService } from '../../../core/services/books.service';
 export class BookListComponent {
   private readonly booksService = inject(BooksService);
 
-  readonly books$: Observable<Book[]> = this.booksService.getBooks();
-  selectedBook$?: Observable<Book>;
+  readonly books = rxResource<Book[], void>({
+    defaultValue: [],
+    loader: () => this.booksService.getBooks(),
+  });
 
-  selectBook(id: string): void {
-    this.selectedBook$ = this.booksService.getBook(id);
+  private readonly selectedBookId = signal<string | null>(null);
+
+  readonly selectedBook = rxResource<Book | null, string | null>({
+    request: this.selectedBookId,
+    defaultValue: null,
+    loader: ({ request }) =>
+      request ? this.booksService.getBook(request) : of(null),
+  });
+
+  selectBook(id: string) {
+    this.selectedBookId.set(id);
   }
 
-  toggleFavorite(book: Book): void {
-    console.log('toggleFavorite',book)
+  toggleFavorite(book: Book) {
+    console.log('toggleFavorite', book);
   }
 }

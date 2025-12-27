@@ -10,49 +10,48 @@
     </div>
   </div>
 
-
-  @if (books$ | async; as books) {
-
-    <section class="book-card__grid">
-      @for (book of books; track book.id) {
   
-      <article class="card" (click)="selectBook(book.id)">
-        <div class="card__header">
-          <div>
-            <p class="card__eyebrow">ISBN {{ book.isbn }}</p>
-            <h2 class="card__title">{{ book.name }}</h2>
-            <p class="card__muted">by {{ book.authors.join(", ") }}</p>
-          </div>
-          <button
-            type="button"
-            class="card__favorite"
-            (click)="toggleFavorite(book)"
-          > ☆
-          </button>
+  @if (!books.isLoading(); ) {
+  <section class="book-card__grid">
+    @for (book of books.value(); track book.id) {
+    <article class="card" (click)="selectBook(book.id)">
+      <div class="card__header">
+        <div>
+          <p class="card__eyebrow">ISBN {{ book.isbn }}</p>
+          <h2 class="card__title">{{ book.name }}</h2>
+          <p class="card__muted">by {{ book.authors.join(", ") }}</p>
         </div>
+        <button
+          type="button"
+          class="card__favorite"
+          (click)="toggleFavorite(book)"
+        >
+          ☆
+        </button>
+      </div>
 
-        <div class="card__meta">
-          <span>{{ book.mediaType }}</span>
-          <span>{{ book.numberOfPages }} pages</span>
-          <span>Released {{ book.released | date : "mediumDate" }}</span>
-        </div>
+      <div class="card__meta">
+        <span>{{ book.mediaType }}</span>
+        <span>{{ book.numberOfPages }} pages</span>
+        <span>Released {{ book.released | date : "mediumDate" }}</span>
+      </div>
 
-        <p class="card__publisher">
-          Published by {{ book.publisher }} in {{ book.country }}
-        </p>
+      <p class="card__publisher">
+        Published by {{ book.publisher }} in {{ book.country }}
+      </p>
 
-        <div class="card__actions">
-          <a
-            class="card__link"
-            [routerLink]="['/books', book.id]"
-            (click)="$event.stopPropagation()"
-          >
-            View details
-          </a>
-        </div>
-      </article>
-      }
-    </section>
+      <div class="card__actions">
+        <a
+          class="card__link"
+          [routerLink]="['/books', book.id]"
+          (click)="$event.stopPropagation()"
+        >
+          View details
+        </a>
+      </div>
+    </article>
+    }
+  </section>
 
   } @else {
   <p>Loading books...</p>
