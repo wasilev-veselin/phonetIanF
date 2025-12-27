@@ -1,7 +1,46 @@
-<section class="page">
-  <div class="page__header">
-    <a class="link" routerLink="/books">← Back to books</a>
+<section class="page-list">
+  <div class="page-list__header">
+    <div>
+      <a class="link" routerLink="/books">← Back to books</a>
+      <h1>Details</h1>
+    </div>
   </div>
 
+  <section class="book-grid__details">
+    @if (selectedBook$ | async; as selected) {
+    <article class="card">
+      <div class="card__header">
+        <div>
+          <p class="card__eyebrow">ISBN {{ selected!.isbn }}</p>
+          <h1 class="card__title">{{ selected!.name }}</h1>
+          <p class="card__muted">by {{ selected!.authors.join(", ") }}</p>
+          <p class="card__muted">
+            Published by {{ selected!.publisher }} in {{ selected!.country }}
+          </p>
+        </div>
+        <button type="button" class="card__favorite">☆</button>
+      </div>
 
+      <div class="card__meta">
+        <span>Media: {{ selected!.mediaType }}</span>
+        <span>{{ selected!.numberOfPages }} pages</span>
+        <span>Released {{ selected!.released | date : "fullDate" }}</span>
+      </div>
+
+      <div class="card__body">
+        <h3>API link</h3>
+        <a
+          class="card__link"
+          [href]="selected!.url"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {{ selected!.url }}
+        </a>
+      </div>
+    </article>
+    } @else {
+    <p>Select a book to view its details.</p>
+    }
+  </section>
 </section>

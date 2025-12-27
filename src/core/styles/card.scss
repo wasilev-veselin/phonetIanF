@@ -1,0 +1,109 @@
+.card {
+  border: 1px solid #8f5b2c;
+  border-radius: 5px;
+  background: linear-gradient(145deg, #1a0f0a 0%, #2a1610 45%, #341c14 100%);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  color: #d9c49a;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: #f3d29a;
+  box-shadow:
+    0 0 0 1px rgba(243, 210, 154, 0.45),
+    0 14px 40px rgba(0, 0, 0, 0.55);
+  transform: translateY(-2px);
+}
+
+.card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+}
+
+.card__header > div:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.card__eyebrow {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: #e7c78a;
+  margin: 0 0 0.25rem;
+  font-family: "Cinzel", "Cinzel Decorative", Georgia, serif;
+}
+
+.card__title {
+  margin: 0.15rem 0 0.1rem;
+  font-size: 1.3rem;
+  color: #f0d8a5;
+  font-family: "Cinzel", "Cinzel Decorative", Georgia, serif;
+}
+
+.card__muted {
+  margin: 0;
+  color: #c2a67a;
+}
+
+.card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #d9c49a;
+}
+
+.card__publisher {
+  color: #f0d8a5;
+  margin: 0;
+}
+
+.card__actions {
+  margin-top: auto;
+}
+
+.card__link {
+  color: #f3d29a;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.card__link:hover,
+.card__link:focus-visible {
+  text-decoration: underline;
+}
+
+.card__favorite {
+  border: 1px solid #b67935;
+  background: linear-gradient(135deg, #2c180f, #3a2216);
+  color: #f0d8a5;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.6rem;
+  margin-left: auto;
+}
+
+.card__favorite:hover,
+.card__favorite:focus-visible,
+.card__favorite--active {
+  border-color: #f3d29a;
+  box-shadow: 0 0 0 1px rgba(243, 210, 154, 0.35), 0 8px 20px rgba(0, 0, 0, 0.45);
+  color: #fff4d0;
+}

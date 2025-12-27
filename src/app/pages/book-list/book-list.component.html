@@ -4,51 +4,57 @@
       <p class="page-list__eyebrow">A Song of Ice and Fire</p>
       <h1>Books catalog</h1>
       <p class="page-list__lede">
-        Browse the available books, jump into the details, and mark your favorites to keep
-        them handy.
+        Browse the available books, jump into the details, and mark your
+        favorites to keep them handy.
       </p>
     </div>
   </div>
 
 
   @if (books$ | async; as books) {
-    <div class="book-grid">
-      <section class="book-grid__list">
-        <h2>Books</h2>
-        <ul >
-          @for (book of books; track book.id) {
-            <li>
-              <button type="button" (click)="selectBook(book.id)">
-                <span >{{ book.name }}</span>
-                <span >
-                  <span>ISBN: {{ book.isbn }}</span>
-                  <span>Released: {{ book.released | date: 'mediumDate' }}</span>
-                </span>
-              </button>
-            </li>
-          }
-        </ul>
-      </section>
 
-      <section class="book-grid__details">
-        <h2>Details</h2>
-        @if (selectedBook$ | async; as selected) {
-          <article>
-            <h3>{{ selected.name }}</h3>
-            <p><strong>Publisher:</strong> {{ selected.publisher }}</p>
-            <p><strong>Media type:</strong> {{ selected.mediaType }}</p>
-            <p><strong>Country:</strong> {{ selected.country }}</p>
-            <p><strong>Pages:</strong> {{ selected.numberOfPages }}</p>
-            <p><strong>Authors:</strong> {{ selected.authors.join(', ') }}</p>
-            <p><strong>Released:</strong> {{ selected.released | date: 'mediumDate' }}</p>
-          </article>
-        } @else {
-          <p>Select a book to view its details.</p>
-        }
-      </section>
-    </div>
+    <section class="book-card__grid">
+      @for (book of books; track book.id) {
+  
+      <article class="card" (click)="selectBook(book.id)">
+        <div class="card__header">
+          <div>
+            <p class="card__eyebrow">ISBN {{ book.isbn }}</p>
+            <h2 class="card__title">{{ book.name }}</h2>
+            <p class="card__muted">by {{ book.authors.join(", ") }}</p>
+          </div>
+          <button
+            type="button"
+            class="card__favorite"
+            (click)="toggleFavorite(book)"
+          > ☆
+          </button>
+        </div>
+
+        <div class="card__meta">
+          <span>{{ book.mediaType }}</span>
+          <span>{{ book.numberOfPages }} pages</span>
+          <span>Released {{ book.released | date : "mediumDate" }}</span>
+        </div>
+
+        <p class="card__publisher">
+          Published by {{ book.publisher }} in {{ book.country }}
+        </p>
+
+        <div class="card__actions">
+          <a
+            class="card__link"
+            [routerLink]="['/books', book.id]"
+            (click)="$event.stopPropagation()"
+          >
+            View details
+          </a>
+        </div>
+      </article>
+      }
+    </section>
+
   } @else {
-    <p>Loading books...</p>
+  <p>Loading books...</p>
   }
-
 </section>
