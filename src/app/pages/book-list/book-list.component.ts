@@ -29,15 +29,6 @@ export class BookListComponent implements OnInit {
   readonly booksLoading = this.store.selectSignal(selectBooksLoading);
   readonly booksError = this.store.selectSignal(selectBooksError);
 
-  private readonly selectedBookId = signal<string | null>(null);
-
-  readonly selectedBook = rxResource<Book | null, string | null>({
-    request: this.selectedBookId,
-    defaultValue: null,
-    loader: ({ request }) =>
-      request ? this.booksService.getBook(request) : of(null),
-  });
-
   ngOnInit(): void {
     this.store.dispatch(loadBooks());
   }
