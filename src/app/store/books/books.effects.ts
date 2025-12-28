@@ -1,9 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
 
 import { BooksService } from '../../../core/services/books.service';
-import { loadBooks, loadBooksFailure, loadBooksSuccess } from './books.actions';
+import {
+  loadBook,
+  loadBookFailure,
+  loadBookSuccess,
+  loadBooks,
+  loadBooksFailure,
+  loadBooksSuccess,
+} from './books.actions';
 
 @Injectable()
 export class BooksEffects {
@@ -19,6 +26,18 @@ export class BooksEffects {
           catchError((error) =>
             of(loadBooksFailure({ errorMessage: error?.message ?? 'Failed to load books' }))
           )
+        )
+      )
+    )
+  );
+
+  readonly loadBook$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadBook),
+      exhaustMap(({ id }) =>
+        this.booksService.getBook(id).pipe(
+          map((book) => loadBookSuccess({ book })),
+          catchError((error) => of(loadBookFailure({ errorMessage: error?.message ?? 'Failed to load book' })))
         )
       )
     )

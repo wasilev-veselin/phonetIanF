@@ -1,13 +1,15 @@
 <section class="page-list">
   <div class="page-list__header">
     <div>
-      <a class="link" routerLink="/books">← Back to books</a>
+      <a class="page-list__link" routerLink="/books">← Back to books</a>
       <h1>Details</h1>
     </div>
   </div>
 
   <section class="book-grid__details">
-    @if (selectedBook$ | async; as selected) {
+    @if (selectedBookLoading()) {
+    <p>Loading book details...</p>
+    } @else { @if (selectedBook(); as selected) {
     <article class="card">
       <div class="card__header">
         <div>
@@ -26,21 +28,9 @@
         <span>{{ selected!.numberOfPages }} pages</span>
         <span>Released {{ selected!.released | date : "fullDate" }}</span>
       </div>
-
-      <div class="card__body">
-        <h3>API link</h3>
-        <a
-          class="card__link"
-          [href]="selected!.url"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {{ selected!.url }}
-        </a>
-      </div>
     </article>
-    } @else {
-    <p>Select a book to view its details.</p>
-    }
+    } @else if (selectedBookError()) {
+    <p class="error">{{ selectedBookError() }}</p>
+    } }
   </section>
 </section>
