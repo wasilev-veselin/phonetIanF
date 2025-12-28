@@ -9,3 +9,6 @@ export const loadBooksFailure = createAction('[Books] Load Books Failure', props
 export const loadBook = createAction('[Book] Load Book', props<{ id: string }>());
 export const loadBookSuccess = createAction('[Book] Load Book Success', props<{ book: Book }>());
 export const loadBookFailure = createAction('[Book] Load Book Failure', props<{ errorMessage: string }>());
+
+
+export const toggleFavorite = createAction('[Books] Toggle Favorite', props<{ book: Book }>());

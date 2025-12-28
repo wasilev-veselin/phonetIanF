@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 
 import { Book } from '../../../core/model/book.model';
 import { BooksService } from '../../../core/services/books.service';
-import { loadBooks } from '../../store/books/books.actions';
+import { loadBooks, toggleFavorite } from '../../store/books/books.actions';
 import {
   selectBooks,
   selectBooksError,
@@ -43,6 +43,6 @@ export class BookListComponent implements OnInit {
   }
 
   toggleFavorite(book: Book) {
-    console.log('toggleFavorite', book);
+    this.store.dispatch(toggleFavorite({ book }));
   }
 }

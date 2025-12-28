@@ -1,10 +1,48 @@
-  <section class="page-list">
-    <div class="page-list__header">
-      <div>
-        <p class="page-list__eyebrow">Saved list</p>
-        <h1>Favorites</h1>
-        <p class="page-list__lede">Books you have marked for quick access.</p>
-      </div>
+<section class="page-list">
+  <div class="page-list__header">
+    <div>
+      <p class="page-list__eyebrow">Saved list</p>
+      <h1>Favorites</h1>
+      <p class="page-list__lede">Books you have marked for quick access.</p>
     </div>
-  </section>
+  </div>
 
+  @if (favorites().length) {
+  <section class="book-card__list">
+    @for (book of favorites(); track book.id) {
+    <article class="card">
+      <div class="card__header">
+        <div>
+          <p class="card__eyebrow">ISBN {{ book.isbn }}</p>
+          <h2 class="card__title">{{ book.name }}</h2>
+          <p class="card__muted">by {{ book.authors.join(", ") }}</p>
+        </div>
+        <div class="card__header-actions">
+          <button
+            type="button"
+            class="card__favorite"
+            (click)="toggleFavorite(book)"
+          >
+             ★
+          </button>
+        </div>
+      </div>
+
+      <div class="card__meta">
+        <span>{{ book.mediaType }}</span>
+        <span>{{ book.numberOfPages }} pages</span>
+        <span>Released {{ book.released | date : "mediumDate" }}</span>
+      </div>
+
+      <p class="card__publisher">
+        Published by {{ book.publisher }} in {{ book.country }}
+      </p>
+    </article>
+    }
+  </section>
+  } @else {
+  <p class="card__empty-list">
+    No favorites yet. Mark some books and they will appear here.
+  </p>
+  }
+</section>

@@ -7,6 +7,7 @@ import {
   loadBooks,
   loadBooksFailure,
   loadBooksSuccess,
+  toggleFavorite,
 } from './books.actions';
 
 export interface BooksState {
@@ -16,6 +17,7 @@ export interface BooksState {
   selectedBook: Book | null;
   selectedBookLoading: boolean;
   selectedBookError: string | null;
+  favorites: Book[];
 }
 
 export const initialState: BooksState = {
@@ -25,6 +27,7 @@ export const initialState: BooksState = {
   selectedBook: null,
   selectedBookLoading: false,
   selectedBookError: null,
+  favorites: [],
 };
 
 export const booksReducer = createReducer(
@@ -52,5 +55,17 @@ export const booksReducer = createReducer(
     ...state,
     selectedBookLoading: false,
     selectedBookError: errorMessage,
-  }))
+  })),
+
+  on(toggleFavorite, (state, { book }) => {
+    const exists = state.favorites.some((fav) => fav.id === book.id);
+    const favorites = exists
+      ? state.favorites.filter((fav) => fav.id !== book.id)
+      : [...state.favorites, book];
+
+    return {
+      ...state,
+      favorites,
+    };
+  })
 );

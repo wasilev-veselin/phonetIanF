@@ -14,10 +14,8 @@
 .card:hover,
 .card:focus-within {
   border-color: #f3d29a;
-  box-shadow:
-    0 0 0 1px rgba(243, 210, 154, 0.45),
+  box-shadow: 0 0 0 1px rgba(243, 210, 154, 0.45),
     0 14px 40px rgba(0, 0, 0, 0.55);
-  transform: translateY(-2px);
 }
 
 .card__header {
@@ -103,4 +101,12 @@
   box-shadow: 0 0 0 1px rgba(243, 210, 154, 0.35),
     0 8px 20px rgba(0, 0, 0, 0.45);
   color: #fff4d0;
+}
+.card__empty-list {
+
+  color: #ffba6c;
+  margin: 1em;
+  font-size: 1.5em;
+  font-weight: 400;
+  line-height: 1.6rem;
 }

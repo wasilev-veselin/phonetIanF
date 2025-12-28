@@ -8,3 +8,4 @@ export const selectBooksError = createSelector(selectBooksState, (state) => stat
 export const selectedBook = createSelector(selectBooksState, (state) => state.selectedBook);
 export const selectedBookLoading = createSelector(selectBooksState, (state) => state.selectedBookLoading);
 export const selectedBookError = createSelector(selectBooksState, (state) => state.selectedBookError);
+export const selectFavorites = createSelector(selectBooksState, (state) => state.favorites);

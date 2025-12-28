@@ -1,0 +1,10 @@
+@use '../../../core/styles/page';
+@use '../../../core/styles/card.scss';
+
+.book-card__list {
+  margin: 1.25rem 0;
+
+  .card {
+    margin: 1rem 0 0 0;
+  }
+}
