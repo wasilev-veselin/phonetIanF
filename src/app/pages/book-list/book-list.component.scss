@@ -1,15 +1,55 @@
 @use '../../../core/styles/page';
 @use '../../../core/styles/card.scss';
 
-.book-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1.5rem;
-  align-items: start;
+.hero-banner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 200px;
+  width: 100%;
+  box-sizing: border-box;
+  background-image: url('/images/dragonic.jpg');
+  background-size: cover;
+  background-position: center calc(50% - 20px);
+  background-attachment: fixed;
+  padding: 1.5rem 1.25rem;
+  overflow: hidden;
+  isolation: isolate;
+}
 
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
+.hero-banner {
+  @media (min-width: 768px) {
+    min-height: 320px;
+    padding: 2.5rem 2rem;
+    background-position: center calc(50% - 100px);
   }
+
+}
+  .hero-banner {
+  @media (min-width: 425px) {
+    min-height: 320px;
+    padding: 2rem 2rem;
+    background-position: left calc(50% - 100px);
+  }
+}
+
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.4) 45%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  z-index: 0;
+}
+
+.hero-banner__content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
 }
 
 .book-card__grid {

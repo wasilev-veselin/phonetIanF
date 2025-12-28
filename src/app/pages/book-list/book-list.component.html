@@ -1,16 +1,17 @@
 <section class="page-list">
-  <div class="page-list__header">
-    <div>
-      <p class="page-list__eyebrow">A Song of Ice and Fire</p>
-      <h1>Books catalog</h1>
-      <p class="page-list__lede">
-        Browse the available books, jump into the details, and mark your
-        favorites to keep them handy.
-      </p>
+  <section class="hero-banner">
+    <div class="page-list__header hero-banner__content">
+      <div>
+        <p class="page-list__eyebrow">A Song of Ice and Fire</p>
+        <h1>Books catalog</h1>
+        <p class="page-list__lede">
+          Browse the available books, jump into the details, and mark your
+          favorites to keep them handy.
+        </p>
+      </div>
     </div>
-  </div>
+  </section>
 
-  
   @if (booksError(); as error) {
     <p>Error loading books: {{ error }}</p>
   } @else if (!booksLoading(); ) {

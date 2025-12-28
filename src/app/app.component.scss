@@ -34,14 +34,14 @@
 }
 
 .nav__link {
-    padding: 0.4rem 0.75rem;
-    text-decoration: none;
-    color: #c4ae78;
-    font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  text-decoration: none;
+  color: #c4ae78;
+  font-weight: 600;
 }
 
 .nav__link:hover {
-text-shadow: 0 0 15px #99774c, 0px -5px 20px #a17e51, 0 5px 20px #96744a;
+  text-shadow: 0 0 15px #99774c, 0px -5px 20px #a17e51, 0 5px 20px #96744a;
 }
 
 .nav__link--active {
@@ -52,5 +52,5 @@ text-shadow: 0 0 15px #99774c, 0px -5px 20px #a17e51, 0 5px 20px #96744a;
 .content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
 }

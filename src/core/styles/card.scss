@@ -39,14 +39,12 @@
   font-size: 0.78rem;
   color: #e7c78a;
   margin: 0 0 0.25rem;
-  font-family: "Cinzel", "Cinzel Decorative", Georgia, serif;
 }
 
 .card__title {
   margin: 0.15rem 0 0.1rem;
   font-size: 1.3rem;
   color: #f0d8a5;
-  font-family: "Cinzel", "Cinzel Decorative", Georgia, serif;
 }
 
 .card__muted {
@@ -100,10 +98,9 @@
   margin-left: auto;
 }
 
-.card__favorite:hover,
-.card__favorite:focus-visible,
-.card__favorite--active {
+.card__favorite:hover {
   border-color: #f3d29a;
-  box-shadow: 0 0 0 1px rgba(243, 210, 154, 0.35), 0 8px 20px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 0 1px rgba(243, 210, 154, 0.35),
+    0 8px 20px rgba(0, 0, 0, 0.45);
   color: #fff4d0;
 }
