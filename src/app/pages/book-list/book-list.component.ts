@@ -1,12 +1,9 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { Book } from '../../../core/model/book.model';
-import { BooksService } from '../../../core/services/books.service';
 import { loadBooks, toggleFavorite } from '../../store/books/books.actions';
 import {
   selectBooks,
@@ -22,12 +19,21 @@ import {
   styleUrls: ['./book-list.component.scss'],
 })
 export class BookListComponent implements OnInit {
-  private readonly booksService = inject(BooksService);
   private readonly store = inject(Store);
 
   readonly books = this.store.selectSignal(selectBooks);
   readonly booksLoading = this.store.selectSignal(selectBooksLoading);
   readonly booksError = this.store.selectSignal(selectBooksError);
+
+  readonly searchTerm = signal('');
+  readonly filteredBooks = computed(() => {
+    const term = this.searchTerm().trim().toLowerCase();
+    return this.books().filter((book) => {
+      const haystack = `${book.name} ${book.authors.join(' ')} ${book.publisher} ${book.country} ${book.isbn}`.toLowerCase();
+
+      return haystack.includes(term);
+    });
+  });
 
   ngOnInit(): void {
     this.store.dispatch(loadBooks());
@@ -35,5 +41,9 @@ export class BookListComponent implements OnInit {
 
   toggleFavorite(book: Book) {
     this.store.dispatch(toggleFavorite({ book }));
+  }
+
+  onSearch(term: string) {
+    this.searchTerm.set(term);
   }
 }

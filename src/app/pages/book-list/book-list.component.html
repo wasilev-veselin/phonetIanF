@@ -9,6 +9,18 @@
           favorites to keep them handy.
         </p>
       </div>
+      <div class="search">
+
+        <input
+          id="book-search"
+          type="search"
+          class="search__input"
+          placeholder="search..."
+          [value]="searchTerm()"
+          #searchInput
+          (input)="onSearch(searchInput.value)"
+        />
+      </div>
     </div>
   </section>
 
@@ -16,7 +28,7 @@
     <p>Error loading books: {{ error }}</p>
   } @else if (!booksLoading(); ) {
     <section class="book-card__grid">
-      @for (book of books(); track book.id) {
+      @for (book of filteredBooks(); track book.id) {
       <article class="card">
         <div class="card__header">
           <div>

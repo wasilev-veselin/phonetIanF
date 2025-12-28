@@ -1,9 +1,9 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { BookListComponent } from './book-list.component';
-import { BooksService } from '../../../core/services/books.service';
 import { loadBooks, toggleFavorite } from '../../store/books/books.actions';
 import {
   selectBooks,
@@ -14,10 +14,8 @@ import { Book } from '../../../core/model/book.model';
 
 describe('BookListComponent', () => {
   let store: MockStore;
+  let fixture: ComponentFixture<BookListComponent>;
   let component: BookListComponent;
-  const booksServiceMock = {
-    getBook: jasmine.createSpy('getBook').and.returnValue(of(null)),
-  };
 
   const mockBooks: Book[] = [
     {
@@ -32,11 +30,23 @@ describe('BookListComponent', () => {
       mediaType: 'Hardcover',
       released: '2020-01-01',
     },
+    {
+      id: '2',
+      url: 'url-2',
+      name: 'Second Title',
+      isbn: '321',
+      authors: ['Author Two'],
+      numberOfPages: 200,
+      publisher: 'OtherPub',
+      country: 'OtherCountry',
+      mediaType: 'Paperback',
+      released: '2021-01-01',
+    },
   ];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [BookListComponent],
+      imports: [BookListComponent, RouterTestingModule],
       providers: [
         provideMockStore({
           selectors: [
@@ -45,19 +55,18 @@ describe('BookListComponent', () => {
             { selector: selectBooksError, value: null },
           ],
         }),
-        { provide: BooksService, useValue: booksServiceMock },
       ],
     });
 
     store = TestBed.inject(MockStore);
-    component = TestBed.createComponent(BookListComponent).componentInstance;
+    fixture = TestBed.createComponent(BookListComponent);
+    component = fixture.componentInstance;
   });
 
   it('should dispatch loadBooks on init', () => {
     const dispatchSpy = spyOn(store, 'dispatch');
 
-    component.ngOnInit();
-
+    fixture.detectChanges();
     expect(dispatchSpy).toHaveBeenCalledWith(loadBooks());
   });
 
@@ -74,5 +83,13 @@ describe('BookListComponent', () => {
     component.toggleFavorite(book);
 
     expect(dispatchSpy).toHaveBeenCalledWith(toggleFavorite({ book }));
+  });
+
+  it('should filter books by search term', () => {
+    component.onSearch('book one');
+    expect(component.filteredBooks().length).toBe(1);
+
+    component.onSearch('missing');
+    expect(component.filteredBooks().length).toBe(0);
   });
 });
